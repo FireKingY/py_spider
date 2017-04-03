@@ -22,12 +22,18 @@ def getNewest():
 	title=re.findall(r'(?<="title":").*?(?=")',text)[0]
 	with open(os.getcwd()+r"/newest.txt",'r') as f:
 		last=f.read()
+	print(last)
+	print(now)
 	#与已有记录比较
 	if now==last:
-		print("OnePiece updated!")
+		print("OnePiece did not update!")
 	else:
-		print("OnePiece do=id not update!")
-		sendEmail(now,title)
+		print("OnePiece updated!")
+		try:
+			sendEmail(now,title)
+		except Exception as e:
+			print('Failed to send email!')
+		
 		with open(os.getcwd()+"\\newest.txt",'w') as f:
 			f.write(str(now))
 		
