@@ -24,9 +24,9 @@ def getNewest():
 		last=f.read()
 	#与已有记录比较
 	if now==last:
-		print("未更新")
+		print("OnePiece updated!")
 	else:
-		print("有更新")
+		print("OnePiece do=id not update!")
 		sendEmail(now,title)
 		with open(os.getcwd()+"\\newest.txt",'w') as f:
 			f.write(str(now))
