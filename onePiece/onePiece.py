@@ -18,7 +18,7 @@ def getNewest():
 		raise e
 	now=re.findall(r'(?<="n-)\d{3,4}?(?=")',text)[0]
 	title=re.findall(r'(?<="title":").*?(?=")',text)[0]
-	with open(os.getcwd()+"\\newest.txt",'r') as f:
+	with open(os.getcwd()+r"/newest.txt",'r') as f:
 		last=f.read()
 	#与已有记录比较
 	if now==last:
