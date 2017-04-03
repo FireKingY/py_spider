@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 #自动获取海贼王更新并发送邮件提醒
 import requests
 import re
