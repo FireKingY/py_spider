@@ -34,7 +34,7 @@ def getNewest():
 		except Exception as e:
 			print('Failed to send email!')
 		
-		with open(os.getcwd()+"\\newest.txt",'w') as f:
+		with open(os.getcwd()+r"/newest.txt",'w') as f:
 			f.write(str(now))
 		
 
