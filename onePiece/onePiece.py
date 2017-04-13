@@ -4,6 +4,7 @@
 import requests
 import re
 import os
+import time
 from email.mime.text import MIMEText
 from email.header import Header
 from smtplib import SMTP_SSL
@@ -67,4 +68,6 @@ def sendEmail(now,title):
 	smtp.sendmail(sender_qq_mail, receiver, msg.as_string())
 	smtp.quit()
 
-getNewest()
+for i in range(144):
+	getNewest()
+	time.sleep(600)
