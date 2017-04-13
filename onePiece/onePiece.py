@@ -79,6 +79,6 @@ while 1:
 			updated=getNewest()
 			if updated==1:
 				break
-			time.sleep(5)
+			time.sleep(300)
 		time.sleep(518400)
 	time.sleep(3600)
