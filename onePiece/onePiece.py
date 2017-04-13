@@ -5,6 +5,7 @@ import requests
 import re
 import os
 import time
+import datetime
 from email.mime.text import MIMEText
 from email.header import Header
 from smtplib import SMTP_SSL
@@ -28,6 +29,7 @@ def getNewest():
 	#与已有记录比较
 	if now==last:
 		print("OnePiece did not update!")
+		return 0
 	else:
 		print("OnePiece updated!")
 		try:
@@ -37,6 +39,7 @@ def getNewest():
 		
 		with open(os.getcwd()+r"/newest.txt",'w') as f:
 			f.write(str(now))
+		return 1
 		
 
 
@@ -68,6 +71,14 @@ def sendEmail(now,title):
 	smtp.sendmail(sender_qq_mail, receiver, msg.as_string())
 	smtp.quit()
 
-for i in range(144):
-	getNewest()
-	time.sleep(600)
+
+while 1:
+	data=datetime.datetime.now()
+	if data.weekday()==3:
+		for i in range(144):
+			updated=getNewest()
+			if updated==1:
+				break
+			time.sleep(5)
+		time.sleep(518400)
+	time.sleep(3600)
