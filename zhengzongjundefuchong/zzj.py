@@ -69,4 +69,4 @@ def sendEmail(now):
 
 while 1:
 	getNewest()
-	time.sleep(86400)
+	time.sleep(60)
