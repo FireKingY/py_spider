@@ -10,10 +10,10 @@ from email.mime.text import MIMEText
 from email.header import Header
 from smtplib import SMTP_SSL
 import sys, time
+location="/media/fire/Study/gayhub/py_spider/manka/"
 
 def getNewest():
 	url="http://www.dm5.com/manhua-zhengzongdefuchou/"
-	location="/home/fire/MyFile/manka/zzj/newest.txt"
 	#获得最新话	
 	try:
 		r = requests.get(url)
@@ -22,7 +22,7 @@ def getNewest():
 	except Exception as e:
 		raise e
 	now=re.findall('(?<=政宗的复仇漫画第).*?(?=话)',text)[0]
-	with open(location,'r') as f:
+	with open(location+"zzj.txt",'r') as f:
 		last=f.read()
 	print('old:'+last)
 	print('new:'+now)
@@ -34,7 +34,7 @@ def getNewest():
 		print("zzj updated!")
 		try:
 			sendEmail(now)
-			with open(location,'w') as f:
+			with open(location+"zzj.txt",'w') as f:
 				f.write(str(now))
 		except Exception as e:
 			print('Failed to send email!')
@@ -69,7 +69,7 @@ def sendEmail(now):
 	smtp.quit()
 
 while 1:
-	with open(r"/home/fire/MyFile/manka/zzj/zzj.log",'a') as f:
+	with open(location+"zzj.log",'a') as f:
 		print("zzj checking runing %s"%time.ctime(),file=f)
 	getNewest()
 	time.sleep(1800)

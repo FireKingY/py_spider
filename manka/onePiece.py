@@ -9,10 +9,10 @@ import datetime
 from email.mime.text import MIMEText
 from email.header import Header
 from smtplib import SMTP_SSL
+location="/media/fire/Study/gayhub/py_spider/manka/"
 
 def getNewest():
 	url="http://api.ishuhui.com/cartoon/book_ish/ver/74207721/id/1.json"
-	location="/home/fire/MyFile/manka/onePiece/newest.txt"
 	#获得最新话	
 	try:
 		r = requests.get(url)
@@ -24,7 +24,7 @@ def getNewest():
 		raise e
 	now=re.findall(r'\d{3,4}?(?=")',text)[0]
 	title=re.findall(r'(?<="title":").*?(?=")',text)[0]
-	with open(location,'r') as f:
+	with open(location+"onePiece.txt",'r') as f:
 		last=f.read()
 	print("old:"+last)
 	print("new:"+now)
@@ -36,7 +36,7 @@ def getNewest():
 		print("OnePiece updated!")
 		try:
 			sendEmail(now,title)
-			with open(location,'w') as f:
+			with open(location+"onePiece.txt",'w') as f:
 				f.write(str(now))
 		except Exception as e:
 			print('Failed to send email!')
@@ -76,7 +76,7 @@ def sendEmail(now,title):
 
 
 while 1:
-	with open(r"/home/fire/MyFile/manka/onePiece/onePiece.log",'a') as f:
+	with open(location+"onePiece.log",'a') as f:
 		print("onePiece checking runing %s"%time.ctime(),file=f)
 	getNewest()
 	time.sleep(1800)
