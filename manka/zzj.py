@@ -13,6 +13,7 @@ import sys, time
 
 def getNewest():
 	url="http://www.dm5.com/manhua-zhengzongdefuchou/"
+	location="/home/fire/MyFile/manka/zzj/newest.txt"
 	#获得最新话	
 	try:
 		r = requests.get(url)
@@ -21,7 +22,7 @@ def getNewest():
 	except Exception as e:
 		raise e
 	now=re.findall('(?<=政宗的复仇漫画第).*?(?=话)',text)[0]
-	with open(r"/home/fire/MyFile/manka/zzj/newest.txt",'r') as f:
+	with open(location,'r') as f:
 		last=f.read()
 	print('old:'+last)
 	print('new:'+now)
@@ -33,7 +34,7 @@ def getNewest():
 		print("zzj updated!")
 		try:
 			sendEmail(now)
-			with open(r"/home/fire/MyFile/manka/zzj/newest.txt",'w') as f:
+			with open(location,'w') as f:
 				f.write(str(now))
 		except Exception as e:
 			print('Failed to send email!')
