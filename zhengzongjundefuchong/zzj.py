@@ -22,8 +22,8 @@ def getNewest():
 	now=re.findall('(?<=政宗的复仇漫画第).*?(?=话)',text)[0]
 	with open(os.getcwd()+r"/newest.txt",'r') as f:
 		last=f.read()
-	print(last)
-	print(now)
+	print('old:'+last)
+	print('new:'+now)
 	#与已有记录比较
 	if now==last:
 		print("zzj did not update!")
@@ -69,4 +69,4 @@ def sendEmail(now):
 
 while 1:
 	getNewest()
-	time.sleep(60)
+	time.sleep(1800)
