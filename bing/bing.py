@@ -9,8 +9,8 @@ import re
 root=os.path.split(os.path.realpath(__file__))[0]
 
 def write_log(content):
-	with open(root+"/bing_log.log",'a') as f:
-		f.write("%s %s\n"%(time.ctime(),content));
+	with open(root+"/bing.log",'a') as f:
+		f.write("%s %s\n"%(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()),content));
 
 def get_adress():
 	url="https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1"
@@ -32,7 +32,7 @@ def download_pic(picAdress):
 	except Exception as e:
 		write_log("Failed to download pic, pic adress:%s"%picAdress)
 
-	picName=re.findall(r'(?<=rb/).*jpg',picAdress)[0]
+	picName=time.strftime("%Y-%m-%d ",time.localtime())+re.findall(r'(?<=rb/).*(?=_ZH-CN)',picAdress)[0]+".jpg"
 	path=root+'/pics/'+picName
 	try:
 		if not os.path.exists(path):
@@ -47,7 +47,7 @@ def download_pic(picAdress):
 	
 
 def main():
-	if not os.path.exists(root+"/bing_log.log"):
+	if not os.path.exists(root+"/bing.log"):
 		f=open("bing_log.log",'w')
 		f.close()
 	if not os.path.exists(root+"/pics"):
