@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#抓取bing每日壁纸
 import requests
 import os
 import time
