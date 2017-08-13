@@ -10,7 +10,12 @@ from email.mime.text import MIMEText
 from email.header import Header
 from smtplib import SMTP_SSL
 import sys, time
-location="/media/fire/Study/gayhub/py_spider/manka/"
+location=os.path.split(os.path.realpath(__file__))[0]+"/"
+
+def write_log(content):
+	with open(location+"zzj.log",'a') as f:
+		f.write("%s %s\n"%(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()),content));
+
 
 def getNewest():
 	url="http://www.dm5.com/manhua-zhengzongdefuchou/"
@@ -21,23 +26,21 @@ def getNewest():
 		text=r.text
 	except Exception as e:
 		raise e
-	now=re.findall('(?<=政宗的复仇漫画第).*?(?=话)',text)[0]
+	now=re.findall(r'(?<=政宗的复仇漫画)\d.*?(?=在线阅读)',text)[0]
 	with open(location+"zzj.txt",'r') as f:
 		last=f.read()
-	print('old:'+last)
-	print('new:'+now)
 	#与已有记录比较
 	if now==last:
-		print("zzj did not update!")
+		write_log("zzj did not update!")
 		return 0
 	else:
-		print("zzj updated!")
+		write_log("zzj updated!")
 		try:
 			sendEmail(now)
 			with open(location+"zzj.txt",'w') as f:
 				f.write(str(now))
 		except Exception as e:
-			print('Failed to send email!')
+			write_log('Failed to send email!')
 		return 1
 
 def sendEmail(now):
@@ -68,8 +71,10 @@ def sendEmail(now):
 	smtp.sendmail(sender_qq_mail, receiver, msg.as_string())
 	smtp.quit()
 
-while 1:
-	with open(location+"zzj.log",'a') as f:
-		print("zzj checking runing %s"%time.ctime(),file=f)
+def main():
+	if not os.path.exists(location+"zzj.txt"):
+		f=open(location+"zzj.txt",'w')
+		f.close()
 	getNewest()
-	time.sleep(1800)
+
+main()

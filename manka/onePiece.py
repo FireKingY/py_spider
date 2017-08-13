@@ -9,7 +9,11 @@ import datetime
 from email.mime.text import MIMEText
 from email.header import Header
 from smtplib import SMTP_SSL
-location="/media/fire/Study/gayhub/py_spider/manka/"
+location=os.path.split(os.path.realpath(__file__))[0]+"/"
+
+def write_log(content):
+	with open(location+"onePiece.log",'a') as f:
+		f.write("%s %s\n"%(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()),content));
 
 def getNewest():
 	url="http://api.ishuhui.com/cartoon/book_ish/ver/74207721/id/1.json"
@@ -17,29 +21,26 @@ def getNewest():
 	try:
 		r = requests.get(url)
 		r.raise_for_status()
-		print(r.apparent_encoding)
 		r.encoding=r.apparent_encoding
 		text=r.text[-100:]
 	except Exception as e:
-		raise e
+		write_log("Failed to get the latest")
 	now=re.findall(r'\d{3,4}?(?=")',text)[0]
 	title=re.findall(r'(?<="title":").*?(?=")',text)[0]
 	with open(location+"onePiece.txt",'r') as f:
 		last=f.read()
-	print("old:"+last)
-	print("new:"+now)
 	#与已有记录比较
 	if now==last:
-		print("OnePiece did not update!")
+		write_log("OnePiece did not update!")
 		return 0
 	else:
-		print("OnePiece updated!")
+		write_log("OnePiece updated!")
 		try:
 			sendEmail(now,title)
 			with open(location+"onePiece.txt",'w') as f:
 				f.write(str(now))
 		except Exception as e:
-			print('Failed to send email!')
+			write_log('Failed to send email!')
 		
 		
 		return 1
@@ -75,8 +76,15 @@ def sendEmail(now,title):
 	smtp.quit()
 
 
-while 1:
+def main():
+	if not os.path.exists(location+"onePiece.log"):
+		f=open(location+"onePiece.log",'w')
+		f.close()
+	if not os.path.exists(location+"onePiece.txt"):
+		f=open(location+"onePiece.txt",'w')
+		f.close()
 	with open(location+"onePiece.log",'a') as f:
-		print("onePiece checking runing %s"%time.ctime(),file=f)
+		write_log("onePiece checking runing")
 	getNewest()
-	time.sleep(1800)
+
+main()
