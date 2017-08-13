@@ -22,7 +22,7 @@ def get_adress():
 	except Exception as e:
 		write_log("Failed to get picAdress")
 	write_log("Successfully got pic adress")
-	picAdress="http://www.bing.com"+re.findall(r'(?<="url":").*(?=","urlbase")',text)[0]
+	picAdress="https://www.bing.com"+re.findall(r'(?<="url":").*(?=","urlbase")',text)[0]
 	return picAdress
 
 def download_pic(picAdress):
@@ -48,7 +48,7 @@ def download_pic(picAdress):
 
 def main():
 	if not os.path.exists(root+"/bing_log.log"):
-		f.open(bing_log.log,'w')
+		f=open("bing_log.log",'w')
 		f.close()
 	if not os.path.exists(root+"/pics"):
 		os.mkdir(root+"/pics")
