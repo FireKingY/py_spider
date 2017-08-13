@@ -47,9 +47,6 @@ def download_pic(picAdress):
 	
 
 def main():
-	if not os.path.exists(root+"/bing.log"):
-		f=open("bing_log.log",'w')
-		f.close()
 	if not os.path.exists(root+"/pics"):
 		os.mkdir(root+"/pics")
 	picAdress=get_adress()
