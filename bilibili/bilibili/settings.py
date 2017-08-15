@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import os
 # Scrapy settings for bilibili project
 #
 # For simplicity, this file contains only settings considered important or
@@ -88,3 +88,14 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+#Log
+LOG_ENABLED=True
+LOG_ENCODING='utf-8'
+# LOG_STDOUT=True
+LOG_FILE='logs/spider.log'
+LOG_FORMAT= '%(levelname)s %(asctime)s [%(name)s:%(module)s:%(funcName)s:%(lineno)s] [%(exc_info)s] %(message)s'
+if not os.path.exists("logs"):
+	os.mkdir("logs")
+with open("logs/spider.log",'w'):
+	pass
