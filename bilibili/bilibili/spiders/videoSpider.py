@@ -7,6 +7,7 @@ import time
 class VideoSpider(scrapy.Spider):
 	name="video"
 	url=r'https://api.bilibili.com/archive_rank/getarchiverankbypartion?callback=jQuery17208522017968440501_1502731802625&tid=24&pn='
+	#start page
 	cpage=209
 
 	def parse(self,response):
