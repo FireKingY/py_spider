@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 # Define your item pipelines here
@@ -14,7 +15,7 @@ class JsonWritePipeline(object):
 		f.close()
 
 	def process_item(self, item, spider):
-		f=open("MAD&AMV.csv",'a')
+		f=open("MAD&AMV.csv",'a',encoding='utf-8')
 		f_csv=csv.writer(f)
 		if self.header==0:
 			f_csv.writerow(list(dict(item).keys()))
