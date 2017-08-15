@@ -10,14 +10,15 @@ class JsonWritePipeline(object):
 	header=0
 
 	def __init__(self):
-		self.file=open("MAD&AMV.csv",'w')
-		self.csv=csv.writer(self.file)
-	def __del__(self):
-		self.file.close()
+		f=open("MAD&AMV.csv",'w')
+		f.close()
 
 	def process_item(self, item, spider):
+		f=open("MAD&AMV.csv",'a')
+		f_csv=csv.writer(f)
 		if self.header==0:
-			self.csv.writerow(list(dict(item).keys()))
+			f_csv.writerow(list(dict(item).keys()))
 			self.header=1
-		self.csv.writerow(list(dict(item).values()))
+		f_csv.writerow(list(dict(item).values()))
+		f.close()
 		return item
