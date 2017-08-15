@@ -6,6 +6,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import csv
+from scrapy.exceptions import DropItem
 
 class JsonWritePipeline(object):
 	header=0
@@ -15,6 +16,8 @@ class JsonWritePipeline(object):
 		f.close()
 
 	def process_item(self, item, spider):
+		if item['view']=='--':
+			raise DropItem("view is --")
 		f=open("MAD&AMV.csv",'a',encoding='utf-8')
 		f_csv=csv.writer(f)
 		if self.header==0:
