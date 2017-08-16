@@ -20,7 +20,7 @@ class VideoSpider(scrapy.Spider):
 			'Accept-Language': 'zh',
 			}
 	#start page
-	cpage=9244
+	cpage=9251
 	crawled={}
 	
 
@@ -28,7 +28,7 @@ class VideoSpider(scrapy.Spider):
 		try:
 			videos=json.loads(str(response.body,encoding='utf-8'))['data']['archives']
 		except Exception as e:
-			write_log(str(response.body,encoding='utf-8'))
+			self.write_log(response.body)
 			return
 
 		count=0
@@ -72,6 +72,6 @@ class VideoSpider(scrapy.Spider):
 			with open('logs/error.log','w'):
 				pass
 
-	def write_log(content):
+	def write_log(self,content):
 		with open('logs/error.log','a') as f:
-			f.write("%s %s\n"%(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()),content));
+			f.write(content.decode('utf-8'))
