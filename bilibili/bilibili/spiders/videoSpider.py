@@ -21,6 +21,8 @@ class VideoSpider(scrapy.Spider):
 			}
 	#start page
 	cpage=9244
+	crawled={}
+	
 
 	def parse(self,response):
 		try:
@@ -28,7 +30,9 @@ class VideoSpider(scrapy.Spider):
 		except Exception as e:
 			write_log(str(response.body,encoding='utf-8'))
 			return
+
 		count=0
+		cleaned=False
 		for video in videos:
 			count+=1
 			item=VideoItem()
@@ -44,7 +48,13 @@ class VideoSpider(scrapy.Spider):
 			item['danmaku']=video['stat']['danmaku']
 			item['reply']=video['stat']['reply']
 			item['link']=r'https://www.bilibili.com/video/av'+str(item['av'])
-			yield item
+			
+			if not item['av'] in self.crawled:
+				if not cleaned:
+					self.crawled={}
+				self.crawled[item['av']]=True
+				yield item
+				
 
 		if count!=0:
 			time.sleep(6+random.randint(0,4))
