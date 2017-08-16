@@ -6,6 +6,7 @@ from bilibili.items import VideoItem
 import csv
 import time
 import random
+import os
 
 class VideoSpider(scrapy.Spider):
 	name="video"
@@ -19,10 +20,14 @@ class VideoSpider(scrapy.Spider):
 			'Accept-Language': 'zh',
 			}
 	#start page
-	cpage=9240
+	cpage=9244
 
 	def parse(self,response):
-		videos=json.loads(str(response.body,encoding='utf-8'))['data']['archives']
+		try:
+			videos=json.loads(str(response.body,encoding='utf-8'))['data']['archives']
+		except Exception as e:
+			write_log(str(response.body,encoding='utf-8'))
+			return
 		count=0
 		for video in videos:
 			count+=1
@@ -49,3 +54,14 @@ class VideoSpider(scrapy.Spider):
 
 	def start_requests(self):
 		yield scrapy.Request(self.url+str(self.cpage),headers=self.header)
+
+	def __init__(self):
+		if not os.path.exists("logs"):
+			os.mkdir("logs")
+		if not os.path.exists('logs/error.log'):
+			with open('logs/error.log','w'):
+				pass
+
+	def write_log(content):
+		with open('logs/error.log','a') as f:
+			f.write("%s %s\n"%(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()),content));
