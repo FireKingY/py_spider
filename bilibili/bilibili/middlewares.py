@@ -6,9 +6,13 @@
 # http://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+import logging
+import time
+import random
+import threading
 
 
-class BilibiliSpiderMiddleware(object):
+class ProxytestSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
     # passed objects.
@@ -54,3 +58,17 @@ class BilibiliSpiderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+class RandomProxyMidlleware(object):
+    def process_request(self, request, spider):
+        spider = spider
+        proxy = spider.ppool.rand_proxy()
+        if proxy is not None:
+            proxy = str(proxy[0]) + ':' + str(proxy[1])
+        else:
+            time.sleep(5 + random.randint(0, 4))
+        # print("%s---" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) +
+        #       "cpage:%d---using proxy:%s" % (spider.cpage, str(proxy)) +
+        #       threading.current_thread().name)
+        request.meta['proxy'] = proxy

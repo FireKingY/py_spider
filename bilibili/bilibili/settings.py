@@ -15,12 +15,11 @@ BOT_NAME = 'bilibili'
 SPIDER_MODULES = ['bilibili.spiders']
 NEWSPIDER_MODULE = 'bilibili.spiders'
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'bilibili (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -91,12 +90,29 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 #Log
-LOG_ENABLED=True
-LOG_ENCODING='utf-8'
+LOG_ENABLED = True
+LOG_ENCODING = 'utf-8'
 # LOG_STDOUT=True
-LOG_FILE='logs/spider.log'
-LOG_FORMAT= '%(levelname)s %(asctime)s [%(name)s:%(module)s:%(funcName)s:%(lineno)s] [%(exc_info)s] %(message)s'
+LOG_FILE = 'logs/spider.log'
+LOG_FORMAT = '%(levelname)s %(asctime)s [%(name)s:%(module)s:%(funcName)s:%(lineno)s] [%(exc_info)s] %(message)s'
 if not os.path.exists("logs"):
-	os.mkdir("logs")
-with open("logs/spider.log",'w'):
-	pass
+    os.mkdir("logs")
+with open("logs/spider.log", 'w'):
+    pass
+
+DOWNLOAD_TIMEOUT = 2
+
+DOWNLOADER_MIDDLEWARES = {
+    'bilibili.middlewares.RandomProxyMidlleware': 543,
+}
+
+REACTOR_THREADPOOL_MAXSIZE = 30
+RANDOMIZE_DOWNLOAD_DELAY = False
+# CONCURRENT_REQUESTS = 60
+# CONCURRENT_REQUESTS_PER_DOMAIN = 160
+# CONCURRENT_REQUESTS_PER_IP = 160
+AUTOTHROTTLE_START_DELAY = 0
+
+COOKIES_ENABLED = False
+RETRY_ENABLED = False
+REDIRECT_ENABLED = False
