@@ -21,7 +21,7 @@ class JsonWritePipeline(object):
 
     def process_item(self, item, spider):
         if item['view'] == '--':
-            raise DropItem("view is --")
+            item['view'] = 0
         self.lock.acquire()
         f = open("Single-Player Game.csv", 'a', encoding='utf-8')
         f_csv = csv.writer(f)

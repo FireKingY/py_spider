@@ -31,7 +31,7 @@ class VideoSpider(scrapy.Spider):
     }
     #    start page
     crawled_page = 0
-    cpage = 80000
+    cpage = 4000
     crawled = {}
 
     def parse(self, response):
@@ -65,7 +65,7 @@ class VideoSpider(scrapy.Spider):
         self.crawled_page += 1
 
     def start_requests(self):
-        for i in range(0, 1):
+        for i in range(0, 75000):
             time.sleep(0.5)
             self.cpage += 1
             yield scrapy.Request(
@@ -87,7 +87,7 @@ class VideoSpider(scrapy.Spider):
             target=self.ppool.auto_get, name='auto get')
         self.auto_get.start()
         self.get_proxy.start()
-        self.get_proxy.join(8)
+        self.get_proxy.join()
 
     def write_log(self, content):
         with open('logs/error.log', 'a') as f:
