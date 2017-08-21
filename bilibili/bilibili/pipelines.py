@@ -6,11 +6,11 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import csv
-from scrapy.exceptions import DropItem
 import logging
 from email.mime.text import MIMEText
 from email.header import Header
 from smtplib import SMTP_SSL
+
 
 class JsonWritePipeline(object):
     header = 0

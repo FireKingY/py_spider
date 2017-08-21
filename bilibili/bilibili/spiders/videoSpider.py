@@ -65,8 +65,7 @@ class VideoSpider(scrapy.Spider):
         self.crawled_page += 1
 
     def start_requests(self):
-        for i in range(0, 75000):
-            time.sleep(0.5)
+        for i in range(0, 100):
             self.cpage += 1
             yield scrapy.Request(
                 self.url + str(self.cpage),

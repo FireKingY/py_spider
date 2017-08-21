@@ -6,10 +6,8 @@
 # http://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
-import logging
 import time
 import random
-import threading
 
 
 class ProxytestSpiderMiddleware(object):
@@ -68,7 +66,4 @@ class RandomProxyMidlleware(object):
             proxy = str(proxy[0]) + ':' + str(proxy[1])
         else:
             time.sleep(5 + random.randint(0, 4))
-        # print("%s---" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) +
-        #       "cpage:%d---using proxy:%s" % (spider.cpage, str(proxy)) +
-        #       threading.current_thread().name)
         request.meta['proxy'] = proxy
