@@ -161,8 +161,8 @@ def logout(session):
 
 
 if __name__ == '__main__':
-    account = 2016060106021
-    pw = 10287031
+    account = None
+    pw = None
     ss = login(account, pw)
     g = query_grades(ss, '2016-2017-2')
     logout(ss)
