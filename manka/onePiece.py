@@ -48,19 +48,16 @@ def getNewest():
 
 
 def sendEmail(now,title):
-	#qq邮箱smtp服务器
 	host_server = 'smtp.163.com'
-	#sender_qq为发件人的qq号码
-	sender_qq = '13980561698'
-	#pwd为qq邮箱的授权码
-	pwd = 'vJTZf6KS'
-	#发件人的邮箱
-	sender_qq_mail = '13980561698@163.com'
-	#收件人邮箱
-	receiver = '972023182@qq.com'
-	#邮件的正文内容
+	#sender_account
+	sender = ''
+	#password
+	pwd = ''
+	#sender mail
+	sender_qq_mail = ''
+	#receiver_account
+	receiver = ''
 	mail_content = '<html><body><h1>海贼王更新啦！</h1>' +'<p>观看地址：<a href="http://www.ishuhui.com/cartoon/num/1-0-n-'+now+'">' + str(now)+ '话：' + title + '</a></p>' + '</body></html>'
-	#邮件标题
 	mail_title = '海贼王更新啦！！！'
 
 	#ssl登录

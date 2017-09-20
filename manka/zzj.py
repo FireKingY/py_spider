@@ -44,16 +44,15 @@ def getNewest():
 		return 1
 
 def sendEmail(now):
-	#qq邮箱smtp服务器
 	host_server = 'smtp.163.com'
-	#sender_qq为发件人的qq号码
-	sender_qq = '13980561698'
-	#pwd为qq邮箱的授权码
-	pwd = 'vJTZf6KS'
-	#发件人的邮箱
-	sender_qq_mail = '13980561698@163.com'
-	#收件人邮箱
-	receiver = '972023182@qq.com'
+	#sender_account
+	sender = ''
+	#password
+	pwd = ''
+	#sender mail
+	sender_qq_mail = ''
+	#receiver_account
+	receiver = ''
 	#邮件的正文内容
 	mail_content = '<html><body><h1>政宗的复仇更新啦！\nhttp://www.dm5.com/manhua-zhengzongdefuchou/</h1>'
 	#邮件标题
